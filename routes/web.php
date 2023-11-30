@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,18 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return '<h1>List of all posts</h1><h2>Named route that we will use in the view: ' . route('posts.index') . '</h2>';
-})->name('posts.index');
+Route::get('/', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts/user/{id}', [PostController::class, 'user'])->name('posts.user');
+Route::get('/toggleFollow/{user}', [ProfileController::class, 'toggleFollow'])->name('toggleFollow');
 
-
-Route::get('/posts/user/{id}', function ($id) {
-    return '<h1>List of posts from specific user.</h1><h2>User id: ' . $id . '</h2><h3>Named route that we will ise in the view: ' . route('post.user', ['id' => $id]) . '</h3>';
-})->name('post.user');
-
-Route::get('/toggleFollow/{user}', function ($id) {
-    return '<h1>Toggle like/dislike</h1> <h2>User id: ' . $id . '</h2> <h3>Named route we eill use in the view: ' . route('toggleFollow', ['user' => $id]) . '</h3>';
-})->name('toggleFollow');
+// Automatyczna obsługa domyślnie utworzonych metod dla Resource full.
+Route::resource('posts', PostController::class);
 
 
 Route::get('/dashboard', function () {
