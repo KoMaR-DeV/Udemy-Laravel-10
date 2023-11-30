@@ -1,0 +1,17 @@
+{
+    "name": "marski/udemy_laravel_10",
+    "description": "Course Udemy Laravel 10",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Marski\\UdemyLaravel10\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Marski",
+            "email": "kontakt@marski.pl"
+        }
+    ],
+    "require": {}
+}
