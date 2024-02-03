@@ -8,12 +8,15 @@
     <!-- scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased mt-14">
 
 {{-- notification --}}
-<div class="flex justify-between m-auto w-3/4 text-blue-200 shadow-inner p-3 bg-blue-600">
-    <p><strong>Info </strong> <span>New blog posts has been written</span></p>
-    <strong class="text-xl align-center cursor-pointer">&times;</strong>
+<div x-data="{show: true, message: 'New blog posts has been written'}"
+     x-show="show"
+     x-init="setTimeout(() => show = false, 5000)"
+     class="flex justify-between m-auto w-1/2 text-blue-200 shadow-inner p-3 bg-blue-600 absolute left-1/4 top-0">
+    <p><strong>Info: </strong> <span x-html="message"></span></p>
+    <strong @click="show = false" class="text-xl align-center cursor-pointer">&times;</strong>
 </div>
 
 {{-- container for all --}}
@@ -78,7 +81,7 @@
         <p class="mb-8 text-gray-500">A blog created with Laravel and Tailwind CSS</p>
         <hr/>
     </aside>
-    
+
     {{ $slot }}
 
     {{-- footer --}}
