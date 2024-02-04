@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\App;
 
 /**
  * Resource full controller
@@ -23,6 +23,8 @@ class PostController extends Controller
      */
     public function create()
     {
+
+
         return view('posts.create');
     }
 
@@ -31,14 +33,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title'   => 'required|string|max:20',
+            'content' => 'required|string|max:1000'
+        ]);
+
+        return $validated;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, $locale = 'en')
     {
+        App::setLocale($locale);
         return view('posts.show');
     }
 
@@ -55,6 +63,11 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validated = $request->validate([
+            'title'   => 'required|string|max:20',
+            'content' => 'required|string|max:1000'
+        ]);
+        
         return redirect(route('posts.index'));
     }
 
@@ -66,13 +79,11 @@ class PostController extends Controller
         //
     }
 
-    public function user($id)
+    public function user($id, $locale = 'en')
     {
+        App::setLocale($locale);
         return view('posts.index');
     }
 
-    public function toggleFollow($id)
-    {
-
-    }
+    public function toggleFollow($id) {}
 }

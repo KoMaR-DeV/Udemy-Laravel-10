@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'index'])
     ->name('posts.index');
-Route::get('/posts/user/{id}', [PostController::class, 'user'])
+Route::get('/posts/user/{id}/{locale?}', [PostController::class, 'user'])
     ->name('posts.user');
 Route::get('/toggleFollow/{user}', [ProfileController::class, 'toggleFollow'])
     ->middleware(['auth', 'verified'])
@@ -30,6 +30,9 @@ Route::resource('posts', PostController::class)
 
 Route::resource('posts', PostController::class)
     ->only(['show']);
+
+//Route::get('/posts/{id}/{locale?}', [PostController::class, 'show'])
+//    ->name('posts.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -57,4 +57,13 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function image(ProfileUpdateRequest $request): RedirectResponse
+    {
+        $request->validate([
+            'image' => ['required', 'mimes:jpg,png,bmp,jpeg', 'max:2048', 'image'],
+        ]);
+
+        return Redirect::route('profile.edit')->with('status', 'image-updated');
+    }
 }
