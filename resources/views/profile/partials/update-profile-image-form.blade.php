@@ -9,29 +9,24 @@
         </p>
     </header>
 
-    <img src="http://localhost:8000/images/test-image.png" alt="profile image">
+    <img src="{{ asset('storage/' . $user->image?->path) }}" alt="profile image">
 
-    <form action="{{ route('profile.image') }}" method="POST" class="p-4" enctype="multipart/form-data">
+    <form action="{{ route('profile.image') }}" method="post" class="p-4" enctype="multipart/form-data">
         @csrf
-
+        
         <label class="block mb-4">
             <span class="sr-only">Choose File</span>
             <input type="file" name="image"
                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
-
-            @error('image')
-            <span class="text-red-600 text-sm">{{ $message }}</span>
-            @enderror
-
+            <x-input-error class="mt-2" :messages="$errors->get('image')"/>
         </label>
-
         <div class="flex items-center gap-4">
-            <button type="submit" class="px-4 py-2 text-sm text-white bg-indigo-600 rounded">Submit</button>
+            <x-primary-button>{{ __('Save') }}</x-primary-button>
             @if (session('status') === 'image-updated')
-                <p x-data="{show: true}"
+                <p x-data="{ show: true }"
                    x-show="show"
                    x-transition
-                   x-init="setTimeout(()=> show = false, 2000)"
+                   x-init="setTimeout(() => show = false, 2000)"
                    class="text-sm text-gray-600">
                     Saved</p>
             @endif

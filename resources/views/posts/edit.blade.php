@@ -16,7 +16,7 @@
                     </label>
                     <input name="title" required
                            class="shadow appearance-none border @error('title') border-red-500 @enderror rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline"
-                           id="post-title" type="text" value="{{ old('title') }}">
+                           id="post-title" type="text" value="{{ old('title', $post->title)  }}">
                     <p class="text-red-500 text-xs italic">{{ $errors->first('title') }}</p>
                 </div>
                 <div class="mb-6">
@@ -25,7 +25,7 @@
                     </label>
                     <textarea name="content" required id="post-content"
                               class="drop-shadow-lg w-full h-60 p-4 border @error('content') border-red-500 @enderror focus:outline-none focus:shadow-outline">
-                        {{ old('title') }}
+                        {{ old('title', $post->content) }}
                     </textarea>
                     <p class="text-red-500 text-xs italic">{{ $errors->first('content') }}</p>
                 </div>

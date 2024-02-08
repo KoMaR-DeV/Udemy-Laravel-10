@@ -19,7 +19,7 @@ Route::get('/', [PostController::class, 'index'])
     ->name('posts.index');
 Route::get('/posts/user/{id}/{locale?}', [PostController::class, 'user'])
     ->name('posts.user');
-Route::get('/toggleFollow/{user}', [ProfileController::class, 'toggleFollow'])
+Route::get('/toggleFollow/{user}', [PostController::class, 'toggleFollow'])
     ->middleware(['auth', 'verified'])
     ->name('toggleFollow');
 

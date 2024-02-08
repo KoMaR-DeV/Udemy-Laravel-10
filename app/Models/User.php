@@ -40,6 +40,52 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'password'          => 'hashed',
     ];
+
+    public function posts()
+    {
+        // ma wiele
+        return $this->hasMany(Post::class);
+    }
+
+    public function image()
+    {
+        return $this->hasOne(Image::class);
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'following_id', 'follower_id');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'following_id');
+    }
+
+    public function isFollowing($user)
+    {
+        return $this->following()
+            ->where('following_id', $user->getKey())
+            ->exists();
+    }
+
+    /**
+     * Ten użytkownik ma wiele postów, które lubi
+     */
+    public function likedPosts()
+    {
+        return $this->morphedByMany(Post::class, 'likeable');
+    }
+
+    /**
+     * Ten użytkownik ma wiele postów, których nie lubi.
+     */
+    public function dislikedPosts()
+    {
+        return $this->morphedByMany(Post::class, 'dislikeable');
+    }
+
+
 }
