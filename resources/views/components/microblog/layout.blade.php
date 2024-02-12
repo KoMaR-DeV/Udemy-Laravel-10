@@ -3,10 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>{{ $title ?? null }}</title>
 
     <!-- scripts -->
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 <body class="font-sans antialiased mt-14">
 
@@ -30,15 +34,9 @@
             <div class="text-3xl hidden md:block text-gray-600 font-bold ml-2 tracking-tight">
                 <a href="{{ url('/') }}">LaravelMicroBlog</a>
             </div>
-            <div class="ml-4">
-                <label for="search-post">
-                    <input type="text" name="search" id="search-post" placeholder="Serach for posts..." class="placeholder:italic placeholder:text-slate-400 bg-white w-full border-slate-300 rounded-md py-2 pl-2 pr-3 sm:text-sm">
-                </label>
-                <ul class="bg-white border border-gray-100 nt-2 absolute">
-                    <li class="pl-8 pr-2 py-1 border-b-2 border-gray-100 relative hover:bg-yellow-50 hover:text-gray-900">
-                        <a href="{{route('posts.show', 1)}}">Post title</a></li>
-                </ul>
-            </div>
+
+            <livewire:search/>
+
         </div>
 
         <div class="text-lg hidden md:flex space-x-6">
@@ -84,5 +82,6 @@
         &copy; 2023 LaravelMicroBlog
     </footer>
 </div>
+@livewireScripts
 </body>
 </html>

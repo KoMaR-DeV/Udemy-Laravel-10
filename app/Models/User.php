@@ -43,9 +43,11 @@ class User extends Authenticatable
         'password'          => 'hashed',
     ];
 
+    /**
+     * Ma wiele
+     */
     public function posts()
     {
-        // ma wiele
         return $this->hasMany(Post::class);
     }
 
@@ -86,6 +88,4 @@ class User extends Authenticatable
     {
         return $this->morphedByMany(Post::class, 'dislikeable');
     }
-
-
 }

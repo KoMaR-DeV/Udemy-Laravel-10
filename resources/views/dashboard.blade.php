@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div x-show="tab === 1">
-                            <b>People that follow you:</b>
+                            <b>People that follow you: {{ Auth::user()->followers()->count() }}</b>
                             <ul>
                                 @foreach(Auth::user()->followers()->get() as $follower)
                                     <li>
@@ -42,7 +42,7 @@
                             </ul>
                         </div>
                         <div x-show="tab === 2">
-                            <b>People that you follow:</b>
+                            <b>People that you follow: {{ Auth::user()->following()->count() }}</b>
                             <ul class="space-y-4">
                                 @foreach(Auth::user()->following()->get() as $following)
                                     <li>
@@ -60,11 +60,13 @@
                             </ul>
                         </div>
                         <div x-show="tab === 3">
-                            <b>Posts you liked:</b>
+                            <b>Posts you liked: {{ Auth::user()->likedPosts()->count() }}</b>
                             <ul>
-                                <li><a class="hover:text-stone-500" href="{{ route('posts.show', 1) }}">Liked post
-                                        title</a>
-                                </li>
+                                @foreach(Auth::user()->likedPosts()->get() as $likedPost)
+                                    <li>
+                                        <a class="hover:text-stone-500" href="{{ route('posts.show', $likedPost->id) }}">{{$likedPost->title}}</a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

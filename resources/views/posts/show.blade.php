@@ -21,26 +21,7 @@
 
         <div class="flex mt-10 items-center">
 
-            <div class="flex mr-2">
-
-                <a title="undo like" class="cursor-pointer">
-                    <x-microblog.svg.like-svg class="fill-green-500 hover:stroke-cyan-700"/>
-                </a>
-
-                <a title="you disliked this" class="post">
-                    <x-microblog.svg.like-svg class="fill-green-300"/>
-                </a>
-
-                (13)
-                <a title="undo dislike" class="ml-2 cursor-pointer">
-                    <x-microblog.svg.dislike-svg class="fill-red-500 hover:stroke-cyan-700"/>
-                </a>
-
-                <a title="you like this post" class="ml-2">
-                    <x-microblog.svg.dislike-svg class="fill-red-300"/>
-                </a>
-                (3)
-            </div>
+            <livewire:like :post="$post"/>
 
             @if(Auth::user() && Auth::user()->id != $post->user->id)
                 @if(Auth::user()->isFollowing($post->user))
