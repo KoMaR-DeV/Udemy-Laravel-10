@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -20,7 +21,10 @@ class PostController extends Controller
     public function index(): View
     {
         return view('posts.index', [
-            'posts' => Post::with('user')->paginate(10),
+            'posts' => Post::withCount('usersThatLike')
+                ->with('user')
+                ->orderByDesc('users_that_like_count')
+                ->paginate(10),
         ]);
     }
 
@@ -59,9 +63,12 @@ class PostController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @throws AuthorizationException
      */
     public function edit(Post $post): View
     {
+        $this->authorize('update', $post);
+
         return view('posts.edit', [
             'post' => $post,
         ]);
@@ -84,9 +91,12 @@ class PostController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @throws AuthorizationException
      */
     public function destroy(Post $post): RedirectResponse
     {
+        $this->authorize('update', $post);
+
         $post->delete();
 
         return redirect(route('posts.index'));
@@ -98,7 +108,11 @@ class PostController extends Controller
 
         App::setLocale($locale);
         return view('posts.index', [
-            'posts' => Post::with('user')->where('user_id', $id)->paginate(3),
+            'posts' => Post::withCount('usersThatLike')
+                ->with('user')
+                ->where('user_id', $id)
+                ->orderByDesc('users_that_like_count')
+                ->paginate(10),
             'user'  => $user->name,
         ]);
     }

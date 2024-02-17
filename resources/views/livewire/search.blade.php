@@ -11,7 +11,7 @@
 
         @foreach($posts as $post)
             <li class="pl-8 pr-2 py-1 border-b-2 border-gray-100 relative hover:bg-yellow-50 hover:text-gray-900">
-                <a href="{{route('posts.show', 1)}}">{{ $post['title'] }}</a>
+                <a href="{{route('posts.show', $post->id)}}">{{ $post['title'] }}</a>
             </li>
         @endforeach
 

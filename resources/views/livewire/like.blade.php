@@ -26,7 +26,7 @@
             </a>
 
         @endif
-            ({{ $post->usersThatLike()->count() }})
+        ({{ $post->usersThatLike()->count() }})
 
         @if($isDisliked ?? false)
 

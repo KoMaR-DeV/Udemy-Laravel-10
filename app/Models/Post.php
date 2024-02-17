@@ -28,7 +28,7 @@ class Post extends Model
      */
     public function usersThatLike()
     {
-        return $this->morphToMany(User::class, 'likeable');
+        return $this->morphToMany(User::class, 'likeable')->withPivot('likeable_type');
     }
 
     /**
@@ -36,7 +36,7 @@ class Post extends Model
      */
     public function usersThatDislike()
     {
-        return $this->morphToMany(User::class, 'dislikeable');
+        return $this->morphToMany(User::class, 'dislikeable')->withPivot('likeable_type');
     }
 
     public function isLiked()
