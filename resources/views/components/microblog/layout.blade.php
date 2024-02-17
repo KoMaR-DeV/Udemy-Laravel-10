@@ -15,10 +15,10 @@
 <body class="font-sans antialiased mt-14">
 
 {{-- notification --}}
-<div x-data="{show: true, message: 'New blog posts has been written'}"
-     x-show="show"
+<div x-data="{show: false, message: ''}"
+     x-show="show" @close.
      x-transition
-     x-init="setTimeout(() => show = false, 5000)"
+     @message-received.window="show=true; message=$event.detail.msg; setTimeout(()=> show = false, 5000)"
      class="flex justify-between m-auto w-1/2 text-blue-200 shadow-inner p-3 bg-blue-600 absolute left-1/4 top-0">
     <p><strong>Info: </strong> <span x-html="message"></span></p>
     <strong @click="show = false" class="text-xl align-center cursor-pointer">&times;</strong>
@@ -83,5 +83,17 @@
     </footer>
 </div>
 @livewireScripts
+<script>
+    window.onload = function () {
+        Echo.private('channel-name').listen('RealTimeMessage', (e) => {
+            let event = new CustomEvent('message-received', {
+                detail: {
+                    msg: e.message
+                }
+            })
+            window.dispatchEvent(event)
+        })
+    }
+</script>
 </body>
 </html>

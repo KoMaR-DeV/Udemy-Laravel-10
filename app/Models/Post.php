@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\PostCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,10 @@ class Post extends Model
     protected $fillable = [
         'title',
         'content'
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => PostCreated::class,
     ];
 
     /**

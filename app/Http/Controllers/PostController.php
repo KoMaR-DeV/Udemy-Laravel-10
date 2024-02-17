@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RealTimeMessage;
 use App\Models\Post;
 use App\Models\User;
+use App\Notifications\NewPost;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -46,7 +48,12 @@ class PostController extends Controller
             'content' => 'required|string|max:3000'
         ]);
 
-        $request->user()->posts()->create($validated);
+        $post = $request->user()->posts()->create($validated);
+
+        $message = 'New post: <a href="' . route('posts.show', $post->id) . '">' . $post->title . '</a>';
+
+        event(new RealTimeMessage($message));
+        
         return redirect(route('posts.index'));
     }
 
