@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Events\RealTimeMessage;
 use App\Models\Post;
 use App\Models\User;
-use App\Notifications\NewPost;
+use App\Services\ExampleService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 /**
@@ -53,7 +54,7 @@ class PostController extends Controller
         $message = 'New post: <a href="' . route('posts.show', $post->id) . '">' . $post->title . '</a>';
 
         event(new RealTimeMessage($message));
-        
+
         return redirect(route('posts.index'));
     }
 
@@ -135,5 +136,15 @@ class PostController extends Controller
         }
 
         return back();
+    }
+
+    public function exampleTest(ExampleService $service): string
+    {
+        return $service->execute();
+    }
+
+    public function exampleTestFacade(): string
+    {
+        return Hash::make('a');
     }
 }

@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/test', [PostController::class, 'exampleTest']);
+Route::get('/test-facade', [PostController::class, 'exampleTestFacade']);
+
 Route::get('/', [PostController::class, 'index'])
     ->name('posts.index');
 Route::get('/posts/user/{id}/{locale?}', [PostController::class, 'user'])
